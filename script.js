@@ -15,7 +15,15 @@ let GEMINI_MODEL = localStorage.getItem('nexusai_model') || 'gemini-2.5-flash';
 // ─────────────────────────────────────────────
 // STATE
 // ─────────────────────────────────────────────
-let apiKey            = 'AIzaSyBuPR85QTQpd0SrdP3o6NqsNlFHJTc0LV8';
+let apiKey            = localStorage.getItem('nexusai_api_key');
+if (!apiKey) {
+  apiKey = prompt("Please enter your Gemini API Key (it will be saved locally in your browser):");
+  if (apiKey) {
+    localStorage.setItem('nexusai_api_key', apiKey);
+  } else {
+    console.warn("No API key provided. Chat will not work until a valid key is set.");
+  }
+}
 let chatHistory       = [];          // {role, parts}[]
 let currentImageB64   = null;        // base-64 image string
 let currentImageMime  = 'image/jpeg';
