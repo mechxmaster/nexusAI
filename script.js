@@ -1,5 +1,5 @@
 /* ============================================================
-   NexusAI — script.js
+   Nebula AI — script.js
    Gemini API powered chat with text, image & voice support
    ============================================================ */
 
@@ -10,7 +10,7 @@
 // ─────────────────────────────────────────────
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta/models';
 // Default: gemini-2.5-flash is FREE and widely available
-let GEMINI_MODEL = localStorage.getItem('nexusai_model') || 'gemini-2.5-flash';
+let GEMINI_MODEL = localStorage.getItem('nebula_ai_model') || 'gemini-2.5-flash';
 
 // ─────────────────────────────────────────────
 // STATE
@@ -63,7 +63,7 @@ function init() {
     updateModelBadge(GEMINI_MODEL);
     modelSelect.addEventListener('change', () => {
       GEMINI_MODEL = modelSelect.value;
-      localStorage.setItem('nexusai_model', GEMINI_MODEL);
+      localStorage.setItem('nebula_ai_model', GEMINI_MODEL);
       updateModelBadge(GEMINI_MODEL);
       showToast(`Model switched to ${GEMINI_MODEL} ✓`, 'success');
     });
@@ -354,11 +354,11 @@ async function handleSend() {
 // ─────────────────────────────────────────────
 async function callGeminiAPI(history) {
   const url = `/.netlify/functions/chat`;
-  console.log('[NexusAI] Using model:', GEMINI_MODEL);
+  console.log('[Nebula AI] Using model:', GEMINI_MODEL);
 
   const systemInstruction = {
     parts: [{
-      text: `You are NexusAI, a brilliant and helpful AI assistant powered by Google Gemini. 
+      text: `You are Nebula AI, a brilliant and helpful AI assistant powered by Google Gemini. 
 You are friendly, clear, and concise. Format your responses using markdown when appropriate 
 (use **bold**, *italic*, lists, code blocks etc.). When analyzing images, be thorough and descriptive.
 Always be helpful, accurate, and engaging.`
@@ -451,7 +451,7 @@ function addMessage(role, text, imageSrc = null) {
 
   const label = document.createElement('div');
   label.className = 'message-label';
-  label.textContent = isAI ? 'NexusAI' : 'You';
+  label.textContent = isAI ? 'Nebula AI' : 'You';
 
   const bubble = document.createElement('div');
   bubble.className = 'message-bubble';
@@ -499,7 +499,7 @@ function addTypingIndicator() {
 
   const label = document.createElement('div');
   label.className = 'message-label';
-  label.textContent = 'NexusAI';
+  label.textContent = 'Nebula AI';
 
   const indicator = document.createElement('div');
   indicator.className = 'typing-indicator';
