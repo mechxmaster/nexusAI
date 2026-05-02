@@ -297,11 +297,7 @@ async function handleSend() {
   const hasImage = currentImageB64 !== null;
 
   if (!text && !hasImage) return;
-  if (!apiKey) {
-    showToast('⚠️ Please enter your Gemini API key in the sidebar first!', 'error');
-    openSidebar();
-    return;
-  }
+
 
   // Hide welcome, show messages
   hideWelcome();
