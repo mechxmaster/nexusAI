@@ -15,7 +15,7 @@ let GEMINI_MODEL = localStorage.getItem('nexusai_model') || 'gemini-2.5-flash';
 // ─────────────────────────────────────────────
 // STATE
 // ─────────────────────────────────────────────
-let apiKey            = 'AIzaSyCkNvDAnLsi72L8Ljd-NQrxbWL6axC7N2w';
+let apiKey            = 'AIzaSyBuPR85QTQpd0SrdP3o6NqsNlFHJTc0LV8';
 let chatHistory       = [];          // {role, parts}[]
 let currentImageB64   = null;        // base-64 image string
 let currentImageMime  = 'image/jpeg';
