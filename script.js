@@ -15,15 +15,7 @@ let GEMINI_MODEL = localStorage.getItem('nexusai_model') || 'gemini-2.5-flash';
 // ─────────────────────────────────────────────
 // STATE
 // ─────────────────────────────────────────────
-let apiKey            = localStorage.getItem('nexusai_api_key');
-if (!apiKey) {
-  apiKey = prompt("Please enter your Gemini API Key (it will be saved locally in your browser):");
-  if (apiKey) {
-    localStorage.setItem('nexusai_api_key', apiKey);
-  } else {
-    console.warn("No API key provided. Chat will not work until a valid key is set.");
-  }
-}
+let apiKey = null; // No longer needed on frontend
 let chatHistory       = [];          // {role, parts}[]
 let currentImageB64   = null;        // base-64 image string
 let currentImageMime  = 'image/jpeg';
@@ -361,7 +353,7 @@ async function handleSend() {
 // GEMINI API CALL
 // ─────────────────────────────────────────────
 async function callGeminiAPI(history) {
-  const url = `${GEMINI_API_BASE}/${GEMINI_MODEL}:generateContent?key=${apiKey}`;
+  const url = `/.netlify/functions/chat`;
   console.log('[NexusAI] Using model:', GEMINI_MODEL);
 
   const systemInstruction = {
@@ -393,7 +385,7 @@ Always be helpful, accurate, and engaging.`
   const res = await fetch(url, {
     method:  'POST',
     headers: { 'Content-Type': 'application/json' },
-    body:    JSON.stringify(body),
+    body:    JSON.stringify({ model: GEMINI_MODEL, body: body }),
   });
 
   if (!res.ok) {
