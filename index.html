@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NexusAI — Powered by Gemini</title>
+  <meta name="description"
+    content="NexusAI is a beautiful AI assistant powered by Google Gemini. Ask anything via text, voice, or photo." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- Animated Background -->
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+  <div class="noise-overlay"></div>
+
+  <!-- App Container -->
+  <div class="app-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <div class="logo-icon">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="18" fill="url(#logoGrad)" opacity="0.15" />
+              <path d="M20 8 L26 16 L34 18 L28 25 L30 33 L20 29 L10 33 L12 25 L6 18 L14 16 Z" fill="url(#logoGrad)"
+                opacity="0.8" />
+              <circle cx="20" cy="20" r="4" fill="white" />
+              <defs>
+                <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#7c3aed" />
+                  <stop offset="100%" style="stop-color:#06b6d4" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <span class="logo-text">NexusAI</span>
+        </div>
+        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+
+      <button class="new-chat-btn" id="newChatBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 5v14M5 12h14" />
+        </svg>
+        New Conversation
+      </button>
+
+      <div class="sidebar-section">
+        <p class="sidebar-label">Capabilities</p>
+        <div class="capability-list">
+          <div class="capability-item">
+            <div class="cap-icon text-cap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+              </svg>
+            </div>
+            <div>
+              <p class="cap-title">Text Chat</p>
+              <p class="cap-desc">Ask anything in text</p>
+            </div>
+          </div>
+          <div class="capability-item">
+            <div class="cap-icon voice-cap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 1a3 3 0 013 3v8a3 3 0 01-6 0V4a3 3 0 013-3z" />
+                <path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8" />
+              </svg>
+            </div>
+            <div>
+              <p class="cap-title">Voice Input</p>
+              <p class="cap-desc">Speak your question</p>
+            </div>
+          </div>
+          <div class="capability-item">
+            <div class="cap-icon image-cap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <circle cx="8.5" cy="8.5" r="1.5" />
+                <polyline points="21 15 16 10 5 21" />
+              </svg>
+            </div>
+            <div>
+              <p class="cap-title">Image Analysis</p>
+              <p class="cap-desc">Upload or capture photos</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <p class="sidebar-label">Settings</p>
+        <div class="settings-group">
+          <!-- API Key UI removed (hardcoded) -->
+
+          <label class="setting-row" for="modelSelect" style="margin-top: 10px;">
+            <span class="setting-icon">🧠</span>
+            <span class="setting-label">AI Model</span>
+          </label>
+          <select id="modelSelect" class="api-key-input" style="cursor: pointer;">
+            <option value="gemini-2.5-flash">Gemini 2.5 Flash (Recommended)</option>
+            <option value="gemini-3-flash-preview">Gemini 3 Flash Preview</option>
+            <option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
+            <option value="gemini-3.1-pro-preview">Gemini 3.1 Pro Preview</option>
+            <option value="gemini-2.0-flash-exp">Gemini 2.0 Flash Experimental</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <p>Powered by <span class="gradient-text">Google Gemini</span></p>
+      </div>
+    </aside>
+
+    <!-- Main Chat Area -->
+    <main class="main-area">
+
+      <!-- Top Bar -->
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn" aria-label="Open menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+        <div class="topbar-title">
+          <div class="status-dot"></div>
+          <span>NexusAI</span>
+        </div>
+        <div class="model-badge" id="modelBadge">gemini-2.5-flash</div>
+      </header>
+
+      <!-- Chat Messages -->
+      <section class="chat-area" id="chatArea">
+        <!-- Welcome Screen -->
+        <div class="welcome-screen" id="welcomeScreen">
+          <div class="welcome-logo">
+            <div class="logo-ring"></div>
+            <div class="logo-ring ring2"></div>
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="welcome-svg">
+              <path d="M20 8 L26 16 L34 18 L28 25 L30 33 L20 29 L10 33 L12 25 L6 18 L14 16 Z" fill="url(#wGrad)"
+                opacity="0.9" />
+              <circle cx="20" cy="20" r="4" fill="white" />
+              <defs>
+                <linearGradient id="wGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#a855f7" />
+                  <stop offset="100%" style="stop-color:#06b6d4" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <h1 class="welcome-title">Hello, I'm <span class="gradient-text">NexusAI</span></h1>
+          <p class="welcome-sub">Your intelligent companion powered by Google Gemini.<br />Ask me anything — by text,
+            voice, or image.</p>
+          <div class="suggestion-grid">
+            <button class="suggestion-card" data-prompt="Explain quantum computing in simple terms">
+              <span class="sug-icon">⚛️</span>
+              <span>Explain quantum computing simply</span>
+            </button>
+            <button class="suggestion-card" data-prompt="Write a creative short story about a robot learning to dream">
+              <span class="sug-icon">✍️</span>
+              <span>Creative story about a robot</span>
+            </button>
+            <button class="suggestion-card" data-prompt="What are the best productivity tips for students?">
+              <span class="sug-icon">📚</span>
+              <span>Productivity tips for students</span>
+            </button>
+            <button class="suggestion-card"
+              data-prompt="How does machine learning work? Give me a beginner-friendly explanation.">
+              <span class="sug-icon">🤖</span>
+              <span>How does machine learning work?</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Messages will be injected here -->
+        <div class="messages-container" id="messagesContainer"></div>
+      </section>
+
+      <!-- Image Preview Area -->
+      <div class="image-preview-area" id="imagePreviewArea" style="display:none">
+        <div class="image-preview-inner">
+          <img id="previewImg" src="" alt="Selected image preview" />
+          <button class="remove-image-btn" id="removeImageBtn" aria-label="Remove image">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+        <span class="image-label">Image attached — ask me about it!</span>
+      </div>
+
+      <!-- Input Area -->
+      <footer class="input-area">
+        <div class="input-toolbar">
+          <!-- Image Upload Button -->
+          <button class="tool-btn" id="imageUploadBtn" title="Upload image" aria-label="Upload image">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <circle cx="8.5" cy="8.5" r="1.5" />
+              <polyline points="21 15 16 10 5 21" />
+            </svg>
+          </button>
+          <!-- Camera Capture Button -->
+          <button class="tool-btn" id="cameraBtn" title="Take a photo" aria-label="Take photo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" />
+              <circle cx="12" cy="13" r="4" />
+            </svg>
+          </button>
+          <!-- Voice Button -->
+          <button class="tool-btn" id="voiceBtn" title="Voice input" aria-label="Voice input">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 1a3 3 0 013 3v8a3 3 0 01-6 0V4a3 3 0 013-3z" />
+              <path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="input-box-wrapper">
+          <textarea id="messageInput" class="message-input" placeholder="Ask me anything…" rows="1"
+            aria-label="Message input"></textarea>
+          <button class="send-btn" id="sendBtn" aria-label="Send message" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="22" y1="2" x2="11" y2="13" />
+              <polygon points="22 2 15 22 11 13 2 9 22 2" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Hidden file input -->
+        <input type="file" id="fileInput" accept="image/*" style="display:none" aria-label="Select image file" />
+
+        <!-- Camera Modal -->
+        <div class="camera-modal" id="cameraModal" style="display:none">
+          <div class="camera-modal-inner">
+            <div class="camera-header">
+              <h3>📷 Capture Photo</h3>
+              <button class="close-camera-btn" id="closeCameraBtn">✕</button>
+            </div>
+            <video id="cameraVideo" autoplay playsinline></video>
+            <canvas id="cameraCanvas" style="display:none"></canvas>
+            <div class="camera-controls">
+              <button class="capture-btn" id="captureBtn">
+                <div class="capture-dot"></div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <p class="disclaimer">NexusAI may make mistakes. Verify important information.</p>
+      </footer>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
